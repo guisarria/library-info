@@ -11,7 +11,7 @@ import { Footer } from "@/components/footer"
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" })
 
 export const metadata: Metadata = {
-  title: "Packages Information",
+  title: "Library Info",
   description: "Easily get information about dependencies.",
   icons: "/favicon.ico",
 }
