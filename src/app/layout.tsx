@@ -24,7 +24,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${inter.variable} overflow-hidden antialiased h-[calc(100dvh-6dvh)] lg:h-[calc(100dvh-10dvh)]`}
+        className={`${inter.variable} overflow-hidden antialiased h-[calc(100dvh-8dvh)] lg:h-[calc(100dvh-8dvh)]`}
       >
         <ThemeProvider
           attribute="class"

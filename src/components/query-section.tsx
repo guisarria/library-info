@@ -62,7 +62,7 @@ export function QuerySection({ onFetchPackages }: QuerySectionProps) {
         aria-label="Dependency input"
       />
       <PlaceholderIcon
-        className="absolute text-xl tracking-widest top-4 lg:top-1/4 text-nowrap left-1/2 -z-10 -translate-x-1/2 text-muted-foreground opacity-35 flex flex-col gap-y-4 items-center"
+        className="absolute scale-50 text-xl tracking-widest -top-12 lg:top-1/4 text-nowrap left-1/2 -z-10 -translate-x-1/2 text-muted-foreground opacity-35 flex flex-col gap-y-4 items-center"
         isVisible={isQueryEmpty}
       />
       <div className="w-full relative">
