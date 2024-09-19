@@ -36,7 +36,7 @@ export const PackageInfo = ({ packageData }: { packageData: Package }) => (
       {packageData.collected?.github?.starsCount || "0"}
     </Badge>
 
-    <ReadmeDialog className="absolute right-4 top-4">
+    <ReadmeDialog className="absolute right-4 md:top-4 top-1 scale-75 md:scale-100">
       {packageData.collected?.metadata?.readme || ""}
     </ReadmeDialog>
   </div>
