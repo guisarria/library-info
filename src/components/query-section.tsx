@@ -54,17 +54,19 @@ export function QuerySection({ onFetchPackages }: QuerySectionProps) {
 
   return (
     <div className="flex flex-col h-full items-center relative">
-      <Textarea
-        value={query}
-        onChange={handleTextareaChange}
-        spellCheck={false}
-        className="h-full w-full lg:w-[30vw] xl:w-[25vw] resize-none rounded-b-none bg-background/40 p-4 leading-relaxed tracking-wide"
-        aria-label="Dependency input"
-      />
-      <PlaceholderIcon
-        className="absolute scale-50 md:scale-100 text-xl tracking-widest -top-12 lg:top-1/4 text-nowrap left-1/2 -z-10 -translate-x-1/2 text-muted-foreground opacity-35 flex flex-col gap-y-4 items-center"
-        isVisible={isQueryEmpty}
-      />
+      <div className="h-full w-full relative">
+        <Textarea
+          value={query}
+          onChange={handleTextareaChange}
+          spellCheck={false}
+          className="h-full w-full lg:w-[30vw] xl:w-[25vw] resize-none rounded-b-none bg-background/40 p-4 leading-relaxed tracking-wide"
+          aria-label="Dependency input"
+        />
+        <PlaceholderIcon
+          className="absolute scale-50 md:scale-100 text-xl tracking-widest top-1/2 -translate-y-1/2 text-nowrap left-1/2 -z-10 -translate-x-1/2 text-muted-foreground opacity-35 flex flex-col gap-y-4 items-center"
+          isVisible={isQueryEmpty}
+        />
+      </div>
       <div className="w-full relative">
         <Input
           placeholder="Write package name"
