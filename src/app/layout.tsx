@@ -3,6 +3,8 @@ import type { Metadata } from "next"
 import "@/styles/globals.css"
 
 import { Inter } from "next/font/google"
+import { Analytics } from "@vercel/analytics/react"
+import { SpeedInsights } from "@vercel/speed-insights/next"
 import { ThemeProvider } from "next-themes"
 
 import { AmbientLight } from "@/components/ambient-light"
@@ -36,6 +38,8 @@ export default function RootLayout({
           {children}
           <Footer />
         </ThemeProvider>
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   )
