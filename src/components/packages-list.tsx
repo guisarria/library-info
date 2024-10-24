@@ -1,16 +1,16 @@
-import type { Package } from "@/lib/types"
-import { PackageInfo } from "@/components/package-info"
+import type {  SearchParamsProps } from "@/lib/types"
+import { PackageCard } from "@/components/package-card"
+import { fetchPackages } from "@/actions/fetch-packages"
 
-interface PackageListProps {
-  packages: Package[]
-}
+export async function PackageList({ searchParams }: SearchParamsProps) {
+  const query = searchParams?.q ?? ""
+  const packages = query ? await fetchPackages(query) : []
 
-export function PackageList({ packages }: PackageListProps) {
   return (
     <div className="custom-scroll flex h-full w-full overflow-scroll overflow-x-hidden rounded-sm border">
       <div className="w-full">
         {packages.map((pkg, index) => (
-          <PackageInfo key={index} packageData={pkg} />
+          <PackageCard key={pkg.name ?? index} packageData={pkg} />
         ))}
       </div>
     </div>

@@ -1,9 +1,8 @@
 "use client"
 
 import { useCallback, useState } from "react"
-import { fetchPackages } from "@/actions/fetch-packages"
+import { useRouter, useSearchParams } from "next/navigation"
 
-import type { Package } from "@/lib/types"
 import { extractDependencyNames } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -11,12 +10,10 @@ import { Textarea } from "@/components/ui/textarea"
 
 import { EnterIcon, PlaceholderIcon } from "./icons"
 
-interface QuerySectionProps {
-  onFetchPackages: (packages: Package[]) => void
-}
-
-export function QuerySection({ onFetchPackages }: QuerySectionProps) {
-  const [query, setQuery] = useState<string>("")
+export function QuerySection() {
+  const router = useRouter()
+  const searchParams = useSearchParams()
+  const [query, setQuery] = useState<string>(searchParams.get("q") ?? "")
   const [inputValue, setInputValue] = useState<string>("")
 
   const handleTextareaChange = useCallback(
@@ -45,10 +42,9 @@ export function QuerySection({ onFetchPackages }: QuerySectionProps) {
     []
   )
 
-  const handleFetchPackages = useCallback(async () => {
-    const packages = await fetchPackages(query)
-    onFetchPackages(packages)
-  }, [query, onFetchPackages])
+  const handleFetchPackages = useCallback(() => {
+    router.push(`?q=${encodeURIComponent(query)}`)
+  }, [query, router])
 
   const isQueryEmpty = !query.trim()
 

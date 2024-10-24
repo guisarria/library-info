@@ -26,4 +26,11 @@ export type PackageCollected = {
 
 export type Package = {
   collected?: PackageCollected
+  name?: string
+}
+
+export interface SearchParamsProps {
+  searchParams: {
+    q?: string
+  }
 }

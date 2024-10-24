@@ -6,8 +6,8 @@ import { LinkTooltip } from "./link-tooltip"
 import { ReadmeDialog } from "./readme-dialog"
 import { Badge } from "./ui/badge"
 
-export const PackageInfo = ({ packageData }: { packageData: Package }) => (
-  <div className="relative flex w-full flex-col items-start justify-center border-b border-border px-6 pb-6 pt-4">
+export const PackageCard = ({ packageData }: { packageData: Package }) => (
+  <div className="relative flex w-full flex-col items-start justify-center border-b border-border px-6 pb-6 pt-12 md:pt-4">
     <p className="font-medium">
       {packageData.collected?.metadata?.name || "Unknown"}
     </p>

@@ -1,3 +1,5 @@
+"use client"
+
 import { useMemo, type ReactNode } from "react"
 import { useTheme } from "next-themes"
 import Markdown from "react-markdown"
