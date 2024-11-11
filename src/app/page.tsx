@@ -9,6 +9,7 @@ export default async function Home({ searchParams }: SearchParamsProps) {
       <Suspense fallback={<QuerySectionSkeleton />}>
         <QuerySection />
       </Suspense>
+
       <PackageList searchParams={searchParams} />
     </div>
   )

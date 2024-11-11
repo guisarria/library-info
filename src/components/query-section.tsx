@@ -63,6 +63,7 @@ export function QuerySection() {
           isVisible={isQueryEmpty}
         />
       </div>
+
       <div className="w-full relative">
         <Input
           placeholder="Write package name"
@@ -77,6 +78,7 @@ export function QuerySection() {
           className="text-muted-foreground absolute right-4 top-3.5"
         />
       </div>
+
       <Button
         variant="outline"
         size="lg"

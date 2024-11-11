@@ -11,6 +11,7 @@ const Footer = () => {
           <Link href={"https://github.com/guisarria"}>Guilherme Sarria</Link>
         </p>
       </div>
+
       <ThemeToggle />
     </footer>
   )

@@ -69,6 +69,7 @@ const ReadmeDialog = ({ children, className }: ReadmeDialogProps) => {
           Readme
         </Button>
       </DialogTrigger>
+
       <DialogContent className="flex border max-w-5xl flex-col items-center overflow-auto px-12 max-h-[600px] md:max-h-[720px]">
         <DialogTitle className="sr-only">Readme</DialogTitle>
         <DialogDescription className="sr-only">Readme</DialogDescription>
