@@ -9,7 +9,7 @@ export default async function Home({ searchParams }: SearchParamsProps) {
       <div className="flex h-full w-full flex-1">
         <Suspense
           fallback={
-            <div className="border- h-full w-full rounded-sm border-input bg-input/30" />
+            <div className="h-full w-full rounded-sm border border-input bg-input/30" />
           }
         >
           <QuerySection />
