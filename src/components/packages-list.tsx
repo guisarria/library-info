@@ -1,3 +1,4 @@
+import { Suspense } from "react"
 import { fetchPackages } from "@/actions/fetch-packages"
 import { PackageCard } from "@/components/package-card"
 import type { SearchParamsProps } from "@/lib/types"
@@ -11,7 +12,9 @@ export async function PackageList({ searchParams }: SearchParamsProps) {
     <div>
       <div className="max-h-[80vh] w-full">
         {packages.map((pkg, index) => (
-          <PackageCard key={pkg.name ?? index} packageData={pkg} />
+          <Suspense fallback={<div>Loading...</div>} key={pkg.name ?? index}>
+            <PackageCard packageData={pkg} />
+          </Suspense>
         ))}
       </div>
     </div>
