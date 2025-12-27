@@ -47,7 +47,7 @@ export const LinkTooltip = ({
           type="button"
         />
         <TooltipContent
-          className="border border-border bg-background text-foreground"
+          className="border bg-background text-foreground **:bg-background"
           side="bottom"
         >
           <Button

@@ -7,7 +7,7 @@ import { ReadmeDialog } from "./readme-dialog"
 import { Badge } from "./ui/badge"
 
 export const PackageCard = ({ packageData }: { packageData: Package }) => (
-  <div className="group relative flex w-full flex-col items-start justify-center border-border border-b px-6 pt-12 pb-6 transition-colors hover:bg-muted/30 md:pt-6">
+  <div className="group relative flex w-full flex-col items-start justify-center border-border border-b px-6 pt-6 pb-6 transition-colors hover:bg-muted/30">
     <p className="mb-2 font-medium">
       {packageData.collected?.metadata?.name || "Unknown"}
     </p>
@@ -28,7 +28,7 @@ export const PackageCard = ({ packageData }: { packageData: Package }) => (
       Link
     </LinkTooltip>
 
-    <Badge className="mt-4 flex items-center gap-x-1 bg-muted text-muted-foreground hover:text-background">
+    <Badge className="mt-4 flex items-center gap-x-1 bg-muted text-muted-foreground">
       <Star
         className="-mt-0.5 text-orange-600 dark:text-orange-500"
         size={16}
@@ -36,7 +36,7 @@ export const PackageCard = ({ packageData }: { packageData: Package }) => (
       {packageData.collected?.github?.starsCount || "0"}
     </Badge>
 
-    <ReadmeDialog className="absolute top-1 right-4 md:top-4 md:scale-100">
+    <ReadmeDialog className="absolute top-4 right-4 md:scale-100">
       {packageData.collected?.metadata?.readme || ""}
     </ReadmeDialog>
   </div>

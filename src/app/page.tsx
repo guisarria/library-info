@@ -12,9 +12,7 @@ export default async function Home({ searchParams }: SearchParamsProps) {
         </Suspense>
       </div>
       <div className="flex h-full w-full flex-1 flex-col overflow-scroll rounded-sm border border-input bg-input/30 lg:w-1/3">
-        <Suspense
-          fallback={<div className="h-32 animate-pulse rounded bg-muted" />}
-        >
+        <Suspense>
           <PackageList searchParams={searchParams} />
         </Suspense>
       </div>

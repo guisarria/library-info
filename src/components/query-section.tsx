@@ -57,10 +57,11 @@ export function QuerySection() {
 
   return (
     <div className="relative flex h-full w-full flex-col items-center">
-      <div className="relative w-full flex-1 overflow-scroll rounded-sm rounded-b-none! border-b-0">
+      <div className="relative w-full flex-1 overflow-scroll rounded-sm rounded-b-none!">
         <Textarea
           aria-label="Dependency input"
-          className="h-full w-full resize-none rounded-b-none! border-b-0 p-4 leading-relaxed tracking-wide"
+          className="h-full w-full resize-none rounded-sm rounded-b-none! border-b-0 p-4 leading-relaxed tracking-wide focus:border-b focus:mix-blend-lighten"
+          contentEditable={false}
           onChange={handleTextareaChange}
           spellCheck={false}
           value={query}
@@ -88,7 +89,7 @@ export function QuerySection() {
       <div className="mt-auto flex w-full gap-2 self-end pt-4 lg:w-full">
         <Button
           aria-label="Get package information"
-          className="w-full self-center disabled:border-neutral-700"
+          className="w-full self-center rounded-sm disabled:border-neutral-700"
           disabled={isQueryEmpty}
           onClick={handleFetchPackages}
           size="lg"
