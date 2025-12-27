@@ -22,45 +22,46 @@ export const LinkTooltip = ({
   return (
     <TooltipProvider>
       <Tooltip>
-        <TooltipTrigger asChild>
-          <Button
-            asChild
-            className="px-0 text-muted-foreground dark:text-primary"
-            variant={"link"}
-          >
-            <Link
-              className="gap-x-1"
-              href={href}
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              <LinkIcon
-                className="text-cyan-600 dark:text-cyan-400"
-                size={iconSize}
-              />{" "}
-              {children}
-            </Link>
-          </Button>
-        </TooltipTrigger>
-
+        <TooltipTrigger
+          render={
+            <Button
+              className="px-0 text-muted-foreground dark:text-primary"
+              render={
+                <Link
+                  className="gap-x-1"
+                  href={href}
+                  rel="noopener noreferrer"
+                  target="_blank"
+                >
+                  <LinkIcon
+                    className="text-cyan-600 dark:text-cyan-400"
+                    size={iconSize}
+                  />
+                  {children}
+                </Link>
+              }
+              variant={"link"}
+            />
+          }
+        />
         <TooltipContent
           className="border border-border bg-background text-foreground"
           side="bottom"
         >
           <Button
-            asChild
             className="px-0 text-muted-foreground text-sm"
+            render={
+              <Link
+                className="gap-x-1"
+                href={href}
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                {href}
+              </Link>
+            }
             variant={"link"}
-          >
-            <Link
-              className="gap-x-1"
-              href={href}
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              {href}
-            </Link>
-          </Button>
+          />
         </TooltipContent>
       </Tooltip>
     </TooltipProvider>

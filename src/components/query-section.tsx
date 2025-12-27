@@ -48,11 +48,11 @@ export function QuerySection() {
   const isQueryEmpty = !query.trim()
 
   return (
-    <div className="relative flex h-full flex-col items-center">
-      <div className="relative h-full w-full">
+    <div className="relative flex h-full w-full flex-col items-center">
+      <div className="relative w-full flex-1 overflow-scroll rounded-sm rounded-b-none! border-b-0">
         <Textarea
           aria-label="Dependency input"
-          className="h-full w-full resize-none rounded-b-none bg-background/40 p-4 leading-relaxed tracking-wide lg:w-[30vw] xl:w-[25vw]"
+          className="h-full w-full resize-none rounded-b-none! border-b-0 p-4 leading-relaxed tracking-wide"
           onChange={handleTextareaChange}
           spellCheck={false}
           value={query}
@@ -66,7 +66,7 @@ export function QuerySection() {
       <div className="relative w-full">
         <Input
           aria-label="Package name input"
-          className="-mt-[1px] h-12 w-full rounded-t-none bg-background/40"
+          className="h-12 w-full rounded-sm rounded-t-none!"
           onChange={handleInputChange}
           onKeyDown={handlePackageNameChange}
           placeholder="Write package name"
@@ -77,17 +77,18 @@ export function QuerySection() {
           isVisible={inputValue.length > 0}
         />
       </div>
-
-      <Button
-        aria-label="Get package information"
-        className="-bottom-20 mt-6 -mb-5 w-1/3 self-center py-5 disabled:border-neutral-700 lg:absolute lg:my-0"
-        disabled={isQueryEmpty}
-        onClick={handleFetchPackages}
-        size="lg"
-        variant="outline"
-      >
-        Get Info
-      </Button>
+      <div className="mt-auto flex w-full gap-2 self-end pt-4 lg:w-full">
+        <Button
+          aria-label="Get package information"
+          className="w-full self-center disabled:border-neutral-700"
+          disabled={isQueryEmpty}
+          onClick={handleFetchPackages}
+          size="lg"
+          variant="outline"
+        >
+          Get Info
+        </Button>
+      </div>
     </div>
   )
 }

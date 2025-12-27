@@ -10,6 +10,8 @@ import {
 } from "react-syntax-highlighter/dist/esm/styles/prism"
 import rehypeRaw from "rehype-raw"
 
+import { cn } from "@/lib/utils"
+
 import { ProseWrapper } from "./prose-wrapper"
 import { Button } from "./ui/button"
 import {
@@ -64,22 +66,28 @@ const ReadmeDialog = ({ children, className }: ReadmeDialogProps) => {
 
   return (
     <Dialog>
-      <DialogTrigger asChild>
-        <Button className={className} disabled={!children} variant="outline">
-          Readme
-        </Button>
-      </DialogTrigger>
+      <DialogTrigger
+        render={
+          <Button
+            className={cn(className, "")}
+            disabled={!children}
+            variant="outline"
+          >
+            Readme
+          </Button>
+        }
+      />
 
-      <DialogContent className="flex max-h-[600px] max-w-5xl flex-col items-center overflow-auto border px-12 md:max-h-[720px]">
+      <DialogContent className="flex max-h-[600px] max-w-6xl justify-center overflow-auto border p-0 px-12 pt-4 sm:max-w-6xl md:max-h-[720px]">
         <DialogTitle className="sr-only">Readme</DialogTitle>
         <DialogDescription className="sr-only">Readme</DialogDescription>
         <ProseWrapper>
           <Markdown
-            // biome-ignore lint/correctness/noChildrenProp: noChildrenProp
-            children={children}
             components={{ code: renderCode }}
             rehypePlugins={[rehypeRaw]}
-          />
+          >
+            {children}
+          </Markdown>
         </ProseWrapper>
       </DialogContent>
     </Dialog>

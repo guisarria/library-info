@@ -1,16 +1,16 @@
 import type { Metadata } from "next"
+import type { ReactNode } from "react"
 
 import "@/styles/globals.css"
 
-import { Analytics } from "@vercel/analytics/react"
+import { Analytics } from "@vercel/analytics/next"
 import { SpeedInsights } from "@vercel/speed-insights/next"
-import { Inter } from "next/font/google"
-import { ThemeProvider } from "next-themes"
+import { GeistMono } from "geist/font/mono"
+import { GeistSans } from "geist/font/sans"
 
 import { AmbientLight } from "@/components/ambient-light"
 import { Footer } from "@/components/footer"
-
-const inter = Inter({ subsets: ["latin"], variable: "--font-inter" })
+import { ThemeProvider } from "@/components/providers/theme-provider"
 
 export const metadata: Metadata = {
   title: "Library Info",
@@ -18,15 +18,11 @@ export const metadata: Metadata = {
   icons: "/favicon.ico"
 }
 
-export default function RootLayout({
-  children
-}: Readonly<{
-  children: React.ReactNode
-}>) {
+export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html className={inter.variable} lang="en" suppressHydrationWarning>
+    <html className="touch-manipulation" lang="en" suppressHydrationWarning>
       <body
-        className={`${inter.variable} h-[calc(100vh-6vh)] antialiased lg:h-[calc(100vh-9vh)]`}
+        className={`${GeistSans.variable} antialiased ${GeistMono.variable} flex h-screen max-h-screen flex-col items-stretch justify-between overscroll-none font-sans tracking-tight antialiased`}
       >
         <ThemeProvider
           attribute="class"
@@ -35,7 +31,7 @@ export default function RootLayout({
           enableSystem
         >
           <AmbientLight />
-          {children}
+          <main className="mb-8 h-full flex-1">{children}</main>
           <Footer />
         </ThemeProvider>
         <Analytics />
