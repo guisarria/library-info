@@ -9,7 +9,7 @@ export async function PackageList({ searchParams }: SearchParamsProps) {
 
   return (
     <div>
-      <div className="w-full">
+      <div className="max-h-[80vh] w-full">
         {packages.map((pkg, index) => (
           <PackageCard key={pkg.name ?? index} packageData={pkg} />
         ))}

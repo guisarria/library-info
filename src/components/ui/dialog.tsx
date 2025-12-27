@@ -64,7 +64,7 @@ function DialogContent({
             render={
               <Button
                 variant="outline"
-                className="sticky right-0 top-0  left-[100%] "
+                className="sticky  top-0 rounded-xs  left-[100%] "
                 size="icon-sm"
               />
             }
