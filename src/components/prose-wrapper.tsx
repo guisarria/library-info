@@ -7,7 +7,7 @@ export const ProseWrapper = ({ children }: { children: ReactNode }) => {
     <div
       className={cn(
         // General Prose
-        "prose prose-neutral dark:prose-invert w-full prose:font-sans",
+        "prose prose-neutral dark:prose-invert w-full font-sans prose:font-sans",
         // Prose Headings
         "prose-headings:font-normal",
         // Prose Paragraphs

@@ -78,7 +78,7 @@ const ReadmeDialog = ({ children, className }: ReadmeDialogProps) => {
         }
       />
 
-      <DialogContent className="flex max-h-150 max-w-6xl justify-center overflow-auto border p-0 px-12 pt-4 sm:max-w-6xl md:max-h-180">
+      <DialogContent className="flex max-h-[80vh] max-w-6xl justify-center overflow-auto border sm:max-w-6xl">
         <DialogTitle className="sr-only">Readme</DialogTitle>
         <DialogDescription className="sr-only">Readme</DialogDescription>
         <ProseWrapper>

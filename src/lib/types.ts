@@ -30,7 +30,7 @@ export type Package = {
 }
 
 export type SearchParamsProps = {
-  searchParams: {
+  searchParams: Promise<{
     q?: string
-  }
+  }>
 }

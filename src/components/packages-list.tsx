@@ -3,7 +3,8 @@ import { PackageCard } from "@/components/package-card"
 import type { SearchParamsProps } from "@/lib/types"
 
 export async function PackageList({ searchParams }: SearchParamsProps) {
-  const query = searchParams?.q
+  const resolvedSearchParams = await searchParams
+  const query = resolvedSearchParams?.q
   const packages = query ? await fetchPackages(query) : []
 
   return (
