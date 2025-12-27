@@ -2,12 +2,10 @@
 
 const AmbientLight = () => {
   return (
-    <div className="pointer-events-none absolute top-0 left-0 -z-10 h-screen w-screen select-none">
-      <div className="absolute inset-0 isolate contain-strict">
-        <div className="page-light-a absolute top-10 left-0 h-[1480px] w-[680px] translate-y-[-350px] rotate-[-45deg]" />
-        <div className="page-light-b pointer-events-none absolute top-10 left-0 h-[1380px] w-[240px] origin-top-left translate-x-[-220%] translate-y-[-42%] rotate-[-45deg] select-none" />
-        <div className="page-light-c absolute top-10 left-0 h-[1380px] w-[240px] origin-top-left translate-x-[-200%] translate-y-[-50%] rotate-[-45deg]" />
-      </div>
+    <div className="ambient-light -z-10">
+      <div className="light-a back" />
+      <div className="light-b" />
+      <div className="light-c" />
     </div>
   )
 }

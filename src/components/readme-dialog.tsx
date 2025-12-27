@@ -75,6 +75,7 @@ const ReadmeDialog = ({ children, className }: ReadmeDialogProps) => {
         <DialogDescription className="sr-only">Readme</DialogDescription>
         <ProseWrapper>
           <Markdown
+            // biome-ignore lint/correctness/noChildrenProp: noChildrenProp
             children={children}
             components={{ code: renderCode }}
             rehypePlugins={[rehypeRaw]}
