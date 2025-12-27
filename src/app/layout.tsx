@@ -1,5 +1,5 @@
 import type { Metadata } from "next"
-import type { ReactNode } from "react"
+import { type ReactNode, ViewTransition } from "react"
 
 import "@/styles/globals.css"
 
@@ -30,9 +30,11 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           disableTransitionOnChange
           enableSystem
         >
-          <AmbientLight />
-          <main className="mb-8 h-full flex-1">{children}</main>
-          <Footer />
+          <ViewTransition>
+            <AmbientLight />
+            <main className="mb-8 h-full flex-1">{children}</main>
+            <Footer />
+          </ViewTransition>
         </ThemeProvider>
         <Analytics />
         <SpeedInsights />

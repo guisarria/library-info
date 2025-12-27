@@ -12,7 +12,7 @@ export async function PackageList({ searchParams }: SearchParamsProps) {
     <div>
       <div className="max-h-[80vh] w-full">
         {packages.map((pkg, index) => (
-          <Suspense fallback={<div>Loading...</div>} key={pkg.name ?? index}>
+          <Suspense key={pkg.name ?? index}>
             <PackageCard packageData={pkg} />
           </Suspense>
         ))}
