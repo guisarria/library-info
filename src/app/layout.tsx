@@ -22,7 +22,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html className="touch-manipulation" lang="en" suppressHydrationWarning>
       <body
-        className={`${GeistSans.variable} antialiased ${GeistMono.variable} flex h-screen max-h-screen flex-col items-stretch justify-between overscroll-none px-4 font-sans antialiased sm:px-0`}
+        className={`${GeistSans.variable} antialiased ${GeistMono.variable} flex h-screen max-h-screen flex-col justify-between overscroll-none px-4 font-sans antialiased sm:px-0`}
       >
         <ThemeProvider
           attribute="class"

@@ -1,5 +1,3 @@
-"use server"
-
 import { cacheLife, cacheTag } from "next/cache"
 import { cache } from "react"
 import type { Package } from "@/lib/types"

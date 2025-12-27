@@ -1,6 +1,7 @@
 import { Suspense } from "react"
 import { PackageList } from "@/components/packages-list"
 import { QuerySection } from "@/components/query-section"
+import { ScrollArea } from "@/components/ui/scroll-area"
 import type { SearchParamsProps } from "@/lib/types"
 
 export default async function Home({ searchParams }: SearchParamsProps) {
@@ -15,11 +16,20 @@ export default async function Home({ searchParams }: SearchParamsProps) {
           <QuerySection />
         </Suspense>
       </div>
-      <div className="flex h-full w-full flex-1 flex-col overflow-scroll rounded-sm border border-input bg-input/30 lg:w-1/3">
-        <Suspense>
+      <Suspense
+        fallback={
+          <div className="flex h-full max-h-[40vh] w-full flex-1 rounded-sm border border-input bg-input/30 lg:max-h-[90vh]" />
+        }
+      >
+        <ScrollArea
+          className={
+            "flex h-full max-h-[40vh] w-full flex-1 flex-col rounded-sm border border-input bg-input/30 lg:max-h-[90vh] lg:w-1/3"
+          }
+          scrollFade
+        >
           <PackageList searchParams={searchParams} />
-        </Suspense>
-      </div>
+        </ScrollArea>
+      </Suspense>
     </div>
   )
 }
