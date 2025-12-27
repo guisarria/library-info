@@ -31,6 +31,6 @@ export type Package = {
 
 export type SearchParamsProps = {
   searchParams: Promise<{
-    q?: string
+    packages?: string
   }>
 }

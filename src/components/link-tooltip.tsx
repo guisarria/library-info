@@ -52,6 +52,7 @@ export const LinkTooltip = ({
         >
           <Button
             className="px-0 text-muted-foreground text-sm"
+            nativeButton={false}
             render={
               <Link
                 className="gap-x-1"

@@ -7,12 +7,12 @@ import { ReadmeDialog } from "./readme-dialog"
 import { Badge } from "./ui/badge"
 
 export const PackageCard = ({ packageData }: { packageData: Package }) => (
-  <div className="group relative flex w-full flex-col items-start justify-center border-border border-b px-6 pt-12 pb-6 transition-colors hover:bg-muted/30 md:pt-4">
-    <p className="font-medium">
+  <div className="group relative flex w-full flex-col items-start justify-center border-border border-b px-6 pt-12 pb-6 transition-colors hover:bg-muted/30 md:pt-6">
+    <p className="mb-2 font-medium">
       {packageData.collected?.metadata?.name || "Unknown"}
     </p>
 
-    <p className="text-muted-foreground">
+    <p className="text-pretty text-muted-foreground">
       {packageData.collected?.metadata?.description?.replace(/#/g, " ") ||
         "No description available"}
     </p>

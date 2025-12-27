@@ -4,7 +4,7 @@ import type { SearchParamsProps } from "@/lib/types"
 
 export async function PackageList({ searchParams }: SearchParamsProps) {
   const resolvedSearchParams = await searchParams
-  const query = resolvedSearchParams?.q
+  const query = resolvedSearchParams?.packages
   const packages = query ? await fetchPackages(query) : []
 
   return (

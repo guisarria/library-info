@@ -12,7 +12,7 @@ import { EnterIcon, PlaceholderIcon } from "./icons"
 export function QuerySection() {
   const router = useRouter()
   const searchParams = useSearchParams()
-  const [query, setQuery] = useState<string>(searchParams.get("q") ?? "")
+  const [query, setQuery] = useState<string>(searchParams.get("packages") ?? "")
   const [inputValue, setInputValue] = useState<string>("")
 
   const handleTextareaChange = useCallback(
@@ -22,18 +22,26 @@ export function QuerySection() {
     },
     []
   )
-
   const handlePackageNameChange = useCallback(
     (e: React.KeyboardEvent<HTMLInputElement>) => {
-      const newPackageName = e.currentTarget.value.trim()
-      if (newPackageName && e.key === "Enter") {
-        setQuery((prev) => `${prev}\n${newPackageName}`.trim())
-        setInputValue("")
+      if (e.key !== "Enter") {
+        return
       }
-    },
-    []
-  )
 
+      const newPackageName = e.currentTarget.value.trim()
+      if (!newPackageName) {
+        return
+      }
+
+      const nextQuery = `${query}\n${newPackageName}`.trim()
+
+      setQuery(nextQuery)
+      setInputValue("")
+
+      router.push(`?packages=${encodeURIComponent(nextQuery)}`)
+    },
+    [query, router]
+  )
   const handleInputChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       setInputValue(e.target.value)
@@ -42,7 +50,7 @@ export function QuerySection() {
   )
 
   const handleFetchPackages = useCallback(() => {
-    router.push(`?q=${encodeURIComponent(query)}`)
+    router.push(`?packages=${encodeURIComponent(query)}`)
   }, [query, router])
 
   const isQueryEmpty = !query.trim()
