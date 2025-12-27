@@ -29,7 +29,7 @@ export type Package = {
   name?: string
 }
 
-export interface SearchParamsProps {
+export type SearchParamsProps = {
   searchParams: {
     q?: string
   }

@@ -1,6 +1,6 @@
 "use server"
 
-import { Package } from "@/lib/types"
+import type { Package } from "@/lib/types"
 
 export async function fetchPackages(query: string) {
   const packages = query.split("\n").map((pkg) => pkg.trim())
@@ -10,7 +10,7 @@ export async function fetchPackages(query: string) {
       method: "POST",
       headers: {
         Accept: "application/json",
-        "Content-Type": "application/json",
+        "Content-Type": "application/json"
       },
       body: JSON.stringify(packages),
       next: {
@@ -18,8 +18,9 @@ export async function fetchPackages(query: string) {
       }
     })
 
-    if (!response.ok)
+    if (!response.ok) {
       throw new Error(`Failed to fetch packages: ${response.statusText}`)
+    }
 
     const data: Record<string, Package> = await response.json()
     return Object.values(data)

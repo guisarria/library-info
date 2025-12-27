@@ -1,9 +1,9 @@
-import type {  SearchParamsProps } from "@/lib/types"
-import { PackageCard } from "@/components/package-card"
 import { fetchPackages } from "@/actions/fetch-packages"
+import { PackageCard } from "@/components/package-card"
+import type { SearchParamsProps } from "@/lib/types"
 
 export async function PackageList({ searchParams }: SearchParamsProps) {
-  const query = searchParams?.q ?? ""
+  const query = await searchParams?.q
   const packages = query ? await fetchPackages(query) : []
 
   return (

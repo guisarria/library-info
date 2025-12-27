@@ -4,12 +4,14 @@ import { cn } from "@/lib/utils"
 
 const PlaceholderIcon = ({
   isVisible,
-  className,
+  className
 }: {
   isVisible: boolean
   className?: string
 }) => {
-  if (!isVisible) return null
+  if (!isVisible) {
+    return null
+  }
   return (
     <div className={cn(className)}>
       <p className="">Paste dependencies here</p>
@@ -20,20 +22,23 @@ const PlaceholderIcon = ({
 
 const EnterIcon = ({
   isVisible,
-  className,
+  className
 }: {
   isVisible: boolean
   className?: string
 }) => {
-  if (!isVisible) return null
+  if (!isVisible) {
+    return null
+  }
   return (
     <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="18"
+      className={cn("text-inherit", className)}
       height="18"
       viewBox="0 0 16 16"
-      className={cn("text-inherit", className)}
+      width="18"
+      xmlns="http://www.w3.org/2000/svg"
     >
+      <title>Enter</title>
       <g
         fill="none"
         stroke="currentColor"
@@ -41,7 +46,7 @@ const EnterIcon = ({
         strokeLinejoin="round"
         vectorEffect="non-scaling-stroke"
       >
-        <rect width="13" height="13" x=".5" y=".5" rx="1" />
+        <rect height="13" rx="1" width="13" x=".5" y=".5" />
         <path d="m5.5 10.5l-2-2l2-2" />
         <path d="M3.5 8.5h5a1 1 0 0 0 1-1v-3" />
       </g>

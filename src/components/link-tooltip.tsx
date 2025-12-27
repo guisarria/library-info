@@ -1,19 +1,19 @@
-import type { ReactNode } from "react"
-import Link from "next/link"
 import { Link as LinkIcon } from "lucide-react"
+import Link from "next/link"
+import type { ReactNode } from "react"
 
 import { Button } from "./ui/button"
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
-  TooltipTrigger,
+  TooltipTrigger
 } from "./ui/tooltip"
 
 export const LinkTooltip = ({
   href,
   children,
-  iconSize = 12,
+  iconSize = 12
 }: {
   href: string
   children?: ReactNode
@@ -25,18 +25,18 @@ export const LinkTooltip = ({
         <TooltipTrigger asChild>
           <Button
             asChild
-            variant={"link"}
             className="px-0 text-muted-foreground dark:text-primary"
+            variant={"link"}
           >
             <Link
-              href={href}
-              target="_blank"
-              rel="noopener noreferrer"
               className="gap-x-1"
+              href={href}
+              rel="noopener noreferrer"
+              target="_blank"
             >
               <LinkIcon
-                size={iconSize}
                 className="text-cyan-600 dark:text-cyan-400"
+                size={iconSize}
               />{" "}
               {children}
             </Link>
@@ -44,19 +44,19 @@ export const LinkTooltip = ({
         </TooltipTrigger>
 
         <TooltipContent
-          side="bottom"
           className="border border-border bg-background text-foreground"
+          side="bottom"
         >
           <Button
             asChild
+            className="px-0 text-muted-foreground text-sm"
             variant={"link"}
-            className="px-0 text-sm text-muted-foreground"
           >
             <Link
-              href={href}
-              target="_blank"
-              rel="noopener noreferrer"
               className="gap-x-1"
+              href={href}
+              rel="noopener noreferrer"
+              target="_blank"
             >
               {href}
             </Link>
