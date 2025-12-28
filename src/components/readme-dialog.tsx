@@ -1,7 +1,13 @@
 "use client"
 
 import { useTheme } from "next-themes"
-import { type ReactNode, useMemo } from "react"
+import {
+  type CSSProperties,
+  memo,
+  type ReactNode,
+  useCallback,
+  useMemo
+} from "react"
 import Markdown from "react-markdown"
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter"
 import {
@@ -27,49 +33,62 @@ type ReadmeDialogProps = {
   className?: string
 }
 
+type CodeBlockProps = {
+  inline?: boolean
+  className?: string
+  children?: ReactNode
+  style: Record<string, CSSProperties>
+}
+
+const CodeBlock = memo(
+  ({ inline, className, children, style }: CodeBlockProps) => {
+    if (inline || !className) {
+      return <code className={className}>{children}</code>
+    }
+
+    const match = className.match(/language-(\w+)/)
+    if (!match) {
+      return <code className={className}>{children}</code>
+    }
+
+    return (
+      <SyntaxHighlighter
+        className="[&_span]:bg-transparent"
+        customStyle={{ background: "transparent" }}
+        language={match[1]}
+        PreTag="div"
+        showLineNumbers
+        style={style}
+      >
+        {String(children).trimEnd()}
+      </SyntaxHighlighter>
+    )
+  }
+)
+
+CodeBlock.displayName = "CodeBlock"
+
 const ReadmeDialog = ({ children, className }: ReadmeDialogProps) => {
   const { resolvedTheme } = useTheme()
+
   const editorTheme = useMemo(
     () => (resolvedTheme === "dark" ? gruvboxDark : solarizedlight),
     [resolvedTheme]
   )
 
-  const renderCode = ({
-    inline,
-    className,
-    children,
-    ...props
-  }: {
-    inline?: boolean
-    className?: string
-    children?: ReactNode
-  }) => {
-    const match = /language-(\w+)/.exec(className || "")
-    return !inline && match ? (
-      <SyntaxHighlighter
-        customStyle={{ background: "transparent" }}
-        language={match[1]}
-        PreTag="div"
-        style={editorTheme}
-        {...props}
-        className="[&_span]:bg-transparent"
-        showLineNumbers
-      >
-        {String(children).replace(/\n$/, "")}
-      </SyntaxHighlighter>
-    ) : (
-      <code className={className} {...props}>
-        {children}
-      </code>
-    )
-  }
+  const renderCode = useCallback(
+    (props: Omit<CodeBlockProps, "style">) => (
+      <CodeBlock {...props} style={editorTheme} />
+    ),
+    [editorTheme]
+  )
 
   return (
     <Dialog>
       <DialogTrigger
         render={
           <Button
-            className={cn(className, "")}
+            className={cn(className)}
             disabled={!children}
             variant="outline"
           >
