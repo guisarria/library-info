@@ -27,6 +27,7 @@ import {
   DialogTitle,
   DialogTrigger
 } from "./ui/dialog"
+import { ScrollArea } from "./ui/scroll-area"
 
 type ReadmeDialogProps = {
   children: string
@@ -96,18 +97,23 @@ const ReadmeDialog = ({ children, className }: ReadmeDialogProps) => {
           </Button>
         }
       />
-      <DialogContent className="max-h-[80vh] max-w-6xl justify-center overflow-scroll rounded-sm sm:max-w-6xl">
+      <DialogContent className="flex max-w-6xl flex-col items-center justify-center rounded-sm p-0 sm:max-w-6xl">
         <DialogTitle className="sr-only">Readme</DialogTitle>
         <DialogDescription className="sr-only">Readme</DialogDescription>
-        <ProseWrapper>
-          <Markdown
-            components={{ code: renderCode }}
-            rehypePlugins={[rehypeRaw, rehypeSanitize]}
-            remarkPlugins={[remarkGfm]}
-          >
-            {children}
-          </Markdown>
-        </ProseWrapper>
+        <ScrollArea
+          className="mx-auto flex max-h-[80vh] flex-col items-center justify-center"
+          scrollFade
+        >
+          <ProseWrapper>
+            <Markdown
+              components={{ code: renderCode }}
+              rehypePlugins={[rehypeRaw, rehypeSanitize]}
+              remarkPlugins={[remarkGfm]}
+            >
+              {children}
+            </Markdown>
+          </ProseWrapper>
+        </ScrollArea>
       </DialogContent>
     </Dialog>
   )
