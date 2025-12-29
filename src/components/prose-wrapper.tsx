@@ -19,7 +19,7 @@ export const ProseWrapper = ({ children }: { children: ReactNode }) => {
         // Inline Links
         "prose-a:text-foreground/75 prose-a:underline prose-a:decoration-primary/50 prose-a:underline-offset-2 prose-a:transition-all",
         // Inline Link Hover
-        "hover:prose-a:text-foreground hover:prose-a:decoration-primary",
+        "prose-a:hover:text-foreground prose-a:hover:decoration-cyan-400",
         // Blockquotes
         "prose-blockquote:not-italic",
         // Pre and Code Blocks

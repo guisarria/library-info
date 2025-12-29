@@ -15,6 +15,7 @@ import {
   solarizedlight
 } from "react-syntax-highlighter/dist/esm/styles/prism"
 import rehypeRaw from "rehype-raw"
+import rehypeSanitize from "rehype-sanitize"
 import remarkGfm from "remark-gfm"
 import { cn } from "@/lib/utils"
 import { ProseWrapper } from "./prose-wrapper"
@@ -101,7 +102,7 @@ const ReadmeDialog = ({ children, className }: ReadmeDialogProps) => {
         <ProseWrapper>
           <Markdown
             components={{ code: renderCode }}
-            rehypePlugins={[rehypeRaw]}
+            rehypePlugins={[rehypeRaw, rehypeSanitize]}
             remarkPlugins={[remarkGfm]}
           >
             {children}
