@@ -15,12 +15,23 @@ export function QuerySection() {
   const [query, setQuery] = useState<string>(searchParams.get("packages") ?? "")
   const [inputValue, setInputValue] = useState<string>("")
 
+  const example = `
+    "dependencies": {
+    "@base-ui/react": "^1.0.0",
+    "geist": "^1.5.1",
+    "next": "16.1.1",
+    "react": "^19.2.3",
+    "react-dom": "19.2.3"
+    }
+  `
+
   const handleTextareaChange = useCallback(
     (e: React.ChangeEvent<HTMLTextAreaElement>) => {
       const dependencyNames = extractDependencyNames(e.target.value)
       setQuery(dependencyNames.join("\n"))
+      router.push(`?packages=${encodeURIComponent(dependencyNames.join("\n"))}`)
     },
-    []
+    [router]
   )
   const handlePackageNameChange = useCallback(
     (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -66,12 +77,18 @@ export function QuerySection() {
           spellCheck={false}
           value={query}
         />
+        {isQueryEmpty && (
+          <div className="pointer-events-none absolute top-4 right-4 left-4 select-none text-muted-foreground/60">
+            <pre className="whitespace-pre-wrap break-words font-sans text-sm leading-relaxed tracking-wide md:text-base">
+              {example}
+            </pre>
+          </div>
+        )}
         <PlaceholderIcon
           className="absolute top-1/2 left-1/2 -z-10 flex -translate-x-1/2 -translate-y-1/2 scale-50 flex-col items-center gap-y-4 text-nowrap text-muted-foreground text-xl tracking-widest opacity-35 md:scale-100"
           isVisible={isQueryEmpty}
         />
       </div>
-
       <div className="relative w-full">
         <Input
           aria-label="Package name input"
