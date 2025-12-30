@@ -79,7 +79,7 @@ export function QuerySection() {
         />
         {isQueryEmpty && (
           <div className="pointer-events-none absolute top-4 right-4 left-4 select-none text-muted-foreground/60">
-            <pre className="whitespace-pre-wrap break-words font-sans text-sm leading-relaxed tracking-wide md:text-base">
+            <pre className="wrap-break-word whitespace-pre-wrap font-sans text-sm leading-relaxed tracking-wide md:text-base">
               {example}
             </pre>
           </div>

@@ -17,13 +17,13 @@ export const ProseWrapper = ({ children }: { children: ReactNode }) => {
         // Prose Images
         "prose-img: prose-img:m-2",
         // Inline Links
-        "prose-a:text-foreground/75 prose-a:underline prose-a:decoration-primary/50 prose-a:underline-offset-2 prose-a:transition-all",
+        "prose-a:text-foreground prose-a:underline prose-a:decoration-dotted prose-a:underline-offset-2 prose-a:transition-all",
         // Inline Link Hover
-        "prose-a:hover:text-foreground prose-a:hover:decoration-cyan-400",
+        "prose-a:decoration-cyan-400 prose-a:hover:text-foreground",
         // Blockquotes
         "prose-blockquote:not-italic",
         // Pre and Code Blocks
-        "prose-pre:border prose-pre:bg-muted/25 prose-pre:text-primary"
+        "prose-pre:border prose-pre:bg-muted/25 prose-pre:p-0 prose-pre:text-primary"
       )}
     >
       {children}

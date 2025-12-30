@@ -1,13 +1,8 @@
 "use client"
 
+import { CheckCheckIcon, CopyIcon } from "lucide-react"
 import { useTheme } from "next-themes"
-import {
-  type CSSProperties,
-  memo,
-  type ReactNode,
-  useCallback,
-  useMemo
-} from "react"
+import { memo, type ReactNode, useCallback, useState } from "react"
 import Markdown from "react-markdown"
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter"
 import {
@@ -38,52 +33,86 @@ type CodeBlockProps = {
   inline?: boolean
   className?: string
   children?: ReactNode
-  style: Record<string, CSSProperties>
 }
 
-const CodeBlock = memo(
-  ({ inline, className, children, style }: CodeBlockProps) => {
-    if (inline || !className) {
-      return <code className={className}>{children}</code>
-    }
+const CodeBlock = memo(({ inline, className, children }: CodeBlockProps) => {
+  const { resolvedTheme } = useTheme()
+  const [copied, setCopied] = useState(false)
+  const handleCopy = useCallback(async () => {
+    await navigator.clipboard.writeText(String(children))
+    setCopied(true)
+    setTimeout(() => setCopied(false), 2000)
+  }, [children])
 
-    const match = className.match(/language-(\w+)/)
-    if (!match) {
-      return <code className={className}>{children}</code>
-    }
+  const themeStyle = resolvedTheme === "dark" ? gruvboxDark : solarizedlight
 
+  if (inline || !className) {
     return (
+      <code className="rounded bg-muted/80 p-0.5 font-medium font-mono text-sm">
+        {children}
+      </code>
+    )
+  }
+
+  const match = className.match(/language-(\w+)/)
+
+  if (!match) {
+    return (
+      <code className="block bg-muted p-4 font-mono text-sm">{children}</code>
+    )
+  }
+
+  const language = match[1]
+
+  return (
+    <div>
+      <div className="flex items-center justify-between border-b bg-muted/30 px-4 py-2">
+        <span className="text-muted-foreground text-xs uppercase">
+          {language}
+        </span>
+        <Button onClick={handleCopy} size="sm" variant="ghost">
+          {copied ? (
+            <CheckCheckIcon className="text-muted-foreground" />
+          ) : (
+            <CopyIcon className="text-muted-foreground" />
+          )}
+        </Button>
+      </div>
       <SyntaxHighlighter
         className="[&_span]:bg-transparent"
-        customStyle={{ background: "transparent" }}
-        language={match[1]}
+        customStyle={{ background: "transparent", padding: "1rem" }}
+        language={language}
         PreTag="div"
         showLineNumbers
-        style={style}
+        style={themeStyle}
       >
         {String(children).trimEnd()}
       </SyntaxHighlighter>
-    )
-  }
-)
+    </div>
+  )
+})
 
-CodeBlock.displayName = "CodeBlock"
+type MarkdownContentProps = {
+  content: string
+}
+
+const MarkdownContent = memo(({ content }: MarkdownContentProps) => {
+  const renderCode = useCallback(
+    (props: Omit<CodeBlockProps, "style">) => <CodeBlock {...props} />,
+    []
+  )
+  return (
+    <Markdown
+      components={{ code: renderCode }}
+      rehypePlugins={[rehypeRaw, rehypeSanitize]}
+      remarkPlugins={[remarkGfm]}
+    >
+      {content}
+    </Markdown>
+  )
+})
 
 const ReadmeDialog = ({ children, className }: ReadmeDialogProps) => {
-  const { resolvedTheme } = useTheme()
-
-  const editorTheme = useMemo(
-    () => (resolvedTheme === "dark" ? gruvboxDark : solarizedlight),
-    [resolvedTheme]
-  )
-
-  const renderCode = useCallback(
-    (props: Omit<CodeBlockProps, "style">) => (
-      <CodeBlock {...props} style={editorTheme} />
-    ),
-    [editorTheme]
-  )
-
   return (
     <Dialog>
       <DialogTrigger
@@ -105,13 +134,7 @@ const ReadmeDialog = ({ children, className }: ReadmeDialogProps) => {
           scrollFade
         >
           <ProseWrapper>
-            <Markdown
-              components={{ code: renderCode }}
-              rehypePlugins={[rehypeRaw, rehypeSanitize]}
-              remarkPlugins={[remarkGfm]}
-            >
-              {children}
-            </Markdown>
+            <MarkdownContent content={children} />
           </ProseWrapper>
         </ScrollArea>
       </DialogContent>
