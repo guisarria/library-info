@@ -1,35 +1,29 @@
 import { Suspense } from "react"
+import { PackageListSkeleton } from "@/components/package-list-skeleton"
 import { PackageList } from "@/components/packages-list"
 import { QuerySection } from "@/components/query-section"
 import { ScrollArea } from "@/components/ui/scroll-area"
+import { getPackageQueryValue } from "@/lib/package-query"
 import type { SearchParamsProps } from "@/lib/types"
 
 export default async function Home({ searchParams }: SearchParamsProps) {
+  const query = getPackageQueryValue((await searchParams).packages)
+
   return (
-    <div className="container mx-auto flex h-full w-full flex-col items-center gap-6 pt-8 lg:flex-row lg:gap-8">
-      <div className="flex h-full w-full flex-1">
-        <Suspense
-          fallback={
-            <div className="h-full w-full rounded-sm border border-input bg-input/30" />
-          }
-        >
-          <QuerySection />
-        </Suspense>
+    <div className="container mx-auto grid h-full min-h-0 w-full grid-cols-1 grid-rows-[minmax(18rem,0.8fr)_minmax(0,1fr)] gap-6 lg:grid-cols-2 lg:grid-rows-1">
+      <div className="flex min-h-0 w-full">
+        <QuerySection initialQuery={query} />
       </div>
-      <Suspense
-        fallback={
-          <div className="flex h-full max-h-[40vh] w-full flex-1 rounded-sm border border-input bg-input/30 lg:max-h-[90vh]" />
+      <ScrollArea
+        className={
+          "h-full min-h-0 w-full rounded-sm border border-input bg-input/30"
         }
+        scrollFade
       >
-        <ScrollArea
-          className={
-            "flex h-full max-h-[40vh] w-full flex-1 flex-col rounded-sm border border-input bg-input/30 lg:max-h-[90vh] lg:w-1/3"
-          }
-          scrollFade
-        >
-          <PackageList searchParams={searchParams} />
-        </ScrollArea>
-      </Suspense>
+        <Suspense fallback={<PackageListSkeleton />} key={query}>
+          <PackageList query={query} />
+        </Suspense>
+      </ScrollArea>
     </div>
   )
 }

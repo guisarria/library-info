@@ -23,7 +23,7 @@ export const ProseWrapper = ({ children }: { children: ReactNode }) => {
         // Blockquotes
         "prose-blockquote:not-italic",
         // Pre and Code Blocks
-        "prose-pre:border prose-pre:bg-muted/25 prose-pre:p-0 prose-pre:text-primary"
+        "prose-pre:border prose-pre:bg-muted/25 prose-pre:p-0 prose-pre:text-primary [&_pre:has(>code:only-child)]:w-fit [&_pre:has(>code:only-child)]:border-0 [&_pre:has(>code:only-child)]:bg-transparent"
       )}
     >
       {children}

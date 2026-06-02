@@ -1,8 +1,8 @@
 import type { NextConfig } from "next"
 
 const nextConfig: NextConfig = {
-  cacheComponents: true
-  /* config options here */
+  cacheComponents: true,
+  reactCompiler: true
 }
 
 export default nextConfig

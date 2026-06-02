@@ -1,77 +1,95 @@
 "use client"
 
-import { useRouter, useSearchParams } from "next/navigation"
-import { useCallback, useState } from "react"
+import { useRouter } from "next/navigation"
+import {
+  type ChangeEvent,
+  type KeyboardEvent,
+  useEffect,
+  useState,
+  useTransition
+} from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import { Spinner } from "@/components/ui/spinner"
 import { Textarea } from "@/components/ui/textarea"
-import { extractDependencyNames } from "@/lib/utils"
+import { parsePackageNames, serializePackageNames } from "@/lib/package-query"
 
 import { EnterIcon, PlaceholderIcon } from "./icons"
 
-export function QuerySection() {
+const EXAMPLE = `
+  "dependencies": {
+  "@base-ui/react": "^1.0.0",
+  "geist": "^1.5.1",
+  "next": "16.1.1",
+  "react": "^19.2.3",
+  "react-dom": "19.2.3"
+  }
+`
+
+type QuerySectionProps = {
+  initialQuery: string
+}
+
+export function QuerySection({ initialQuery }: QuerySectionProps) {
   const router = useRouter()
-  const searchParams = useSearchParams()
-  const [query, setQuery] = useState<string>(searchParams.get("packages") ?? "")
+  const [isPending, startTransition] = useTransition()
+  const [query, setQuery] = useState<string>(initialQuery)
   const [inputValue, setInputValue] = useState<string>("")
 
-  const example = `
-    "dependencies": {
-    "@base-ui/react": "^1.0.0",
-    "geist": "^1.5.1",
-    "next": "16.1.1",
-    "react": "^19.2.3",
-    "react-dom": "19.2.3"
+  useEffect(() => {
+    setQuery(initialQuery)
+  }, [initialQuery])
+
+  function commitQuery(value: string) {
+    const nextQuery = serializePackageNames(parsePackageNames(value))
+    const params = new URLSearchParams()
+
+    if (nextQuery) {
+      params.set("packages", nextQuery)
     }
-  `
 
-  const handleTextareaChange = useCallback(
-    (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-      const dependencyNames = extractDependencyNames(e.target.value)
-      setQuery(dependencyNames.join("\n"))
-      router.push(`?packages=${encodeURIComponent(dependencyNames.join("\n"))}`)
-    },
-    [router]
-  )
-  const handlePackageNameChange = useCallback(
-    (e: React.KeyboardEvent<HTMLInputElement>) => {
-      if (e.key !== "Enter") {
-        return
-      }
+    setQuery(nextQuery)
 
-      const newPackageName = e.currentTarget.value.trim()
-      if (!newPackageName) {
-        return
-      }
+    startTransition(() => {
+      router.push(params.size > 0 ? `?${params.toString()}` : "/", {
+        scroll: false
+      })
+    })
+  }
 
-      const nextQuery = `${query}\n${newPackageName}`.trim()
+  function handleTextareaChange(e: ChangeEvent<HTMLTextAreaElement>) {
+    setQuery(e.target.value)
+  }
 
-      setQuery(nextQuery)
-      setInputValue("")
+  function handlePackageNameChange(e: KeyboardEvent<HTMLInputElement>) {
+    if (e.key !== "Enter") {
+      return
+    }
 
-      router.push(`?packages=${encodeURIComponent(nextQuery)}`)
-    },
-    [query, router]
-  )
-  const handleInputChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      setInputValue(e.target.value)
-    },
-    []
-  )
+    e.preventDefault()
 
-  const handleFetchPackages = useCallback(() => {
-    router.push(`?packages=${encodeURIComponent(query)}`)
-  }, [query, router])
+    const newPackageName = e.currentTarget.value.trim()
+
+    if (!newPackageName) {
+      return
+    }
+
+    setInputValue("")
+    commitQuery(`${query}\n${newPackageName}`)
+  }
+
+  function handleInputChange(e: ChangeEvent<HTMLInputElement>) {
+    setInputValue(e.target.value)
+  }
 
   const isQueryEmpty = !query.trim()
 
   return (
-    <div className="relative flex h-full w-full flex-col items-center">
-      <div className="relative w-full flex-1 overflow-scroll rounded-sm rounded-b-none!">
+    <div className="relative flex h-full min-h-0 w-full flex-col items-center">
+      <div className="relative min-h-0 w-full flex-1 overflow-hidden rounded-sm rounded-b-none!">
         <Textarea
           aria-label="Dependency input"
-          className="h-full w-full resize-none rounded-sm rounded-b-none! border-b-0 bg-input/30 p-4 leading-relaxed tracking-wide focus:border-b md:text-base dark:focus:mix-blend-lighten"
+          className="field-sizing-fixed h-full min-h-0 w-full resize-none overflow-y-auto rounded-sm rounded-b-none! border-b-0 bg-input/30 p-4 leading-relaxed tracking-wide focus:border-b md:text-base dark:focus:mix-blend-lighten"
           contentEditable={false}
           onChange={handleTextareaChange}
           spellCheck={false}
@@ -80,7 +98,7 @@ export function QuerySection() {
         {isQueryEmpty && (
           <div className="pointer-events-none absolute top-4 right-4 left-4 select-none text-muted-foreground/60">
             <pre className="wrap-break-word whitespace-pre-wrap font-sans text-sm leading-relaxed tracking-wide md:text-base">
-              {example}
+              {EXAMPLE}
             </pre>
           </div>
         )}
@@ -105,13 +123,15 @@ export function QuerySection() {
       </div>
       <div className="mt-auto flex w-full gap-2 self-end pt-4 lg:w-full">
         <Button
+          aria-busy={isPending}
           aria-label="Get package information"
           className="w-full self-center rounded-sm"
-          disabled={isQueryEmpty}
-          onClick={handleFetchPackages}
+          disabled={isQueryEmpty || isPending}
+          onClick={() => commitQuery(query)}
           size="lg"
           variant="outline"
         >
+          {isPending && <Spinner />}
           Get Info
         </Button>
       </div>

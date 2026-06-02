@@ -1,5 +1,5 @@
 import type { Metadata } from "next"
-import { type ReactNode, ViewTransition } from "react"
+import type { ReactNode } from "react"
 
 import "@/styles/globals.css"
 
@@ -13,16 +13,22 @@ import { Footer } from "@/components/footer"
 import { ThemeProvider } from "@/components/providers/theme-provider"
 
 export const metadata: Metadata = {
-  title: "Library Info",
+  title: {
+    default: "Library Info",
+    template: "%s | Library Info"
+  },
   description: "Easily get information about dependencies.",
-  icons: "/favicon.ico"
+  applicationName: "Library Info",
+  icons: {
+    icon: "/favicon.ico"
+  }
 }
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html className="touch-manipulation" lang="en" suppressHydrationWarning>
       <body
-        className={`${GeistSans.variable} antialiased ${GeistMono.variable} flex h-screen max-h-screen flex-col justify-between overscroll-none px-4 font-sans antialiased sm:px-0`}
+        className={`${GeistSans.variable} ${GeistMono.variable} flex h-dvh flex-col overflow-hidden overscroll-none px-4 font-sans antialiased sm:px-0`}
       >
         <ThemeProvider
           attribute="class"
@@ -30,11 +36,11 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           disableTransitionOnChange
           enableSystem
         >
-          <ViewTransition>
-            <AmbientLight />
-            <main className="mb-8 h-full flex-1">{children}</main>
-            <Footer />
-          </ViewTransition>
+          <AmbientLight />
+          <main className="min-h-0 w-full flex-1 overflow-hidden py-6">
+            {children}
+          </main>
+          <Footer />
         </ThemeProvider>
         <Analytics />
         <SpeedInsights />
